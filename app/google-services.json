@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772198554465",
+    "project_id": "meetingminutes-57b4c",
+    "storage_bucket": "meetingminutes-57b4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772198554465:android:f81517f00e3c7176dcc320",
+        "android_client_info": {
+          "package_name": "com.xome.meetingminutes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772198554465-a709ck2b1gafc1ee1fn1tl72g0hjhu4f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRRivIiVzN21N597n8dMzzn4zFoS_uKW0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772198554465-a709ck2b1gafc1ee1fn1tl72g0hjhu4f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

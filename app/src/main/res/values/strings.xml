@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Meeting Minutes</string>
+    <string name="register_label">Register</string>
+    <string name="no_account_text">Don\'t have an account?</string>
+    <string name="invalid_data">Invalid Data!</string>
+    <string name="email_input_hint">Email</string>
+    <string name="password_input_hint">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="name_hint">Name</string>
+    <string name="to_add_notes">To add notes</string>
+    <string name="sort_by">Sort By</string>
+    <string name="log_out">Log Out</string>
+</resources>
