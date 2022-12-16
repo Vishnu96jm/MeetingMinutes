@@ -15,7 +15,7 @@ class LogInViewModel(private val repository: AuthRepository = AuthRepository()) 
         logOutData = repository.getLoggedOutData()
     }
 
-    fun login(email: String?, password: String?) {
+    fun login(email: String, password: String) {
         repository.login(email, password)
     }
 

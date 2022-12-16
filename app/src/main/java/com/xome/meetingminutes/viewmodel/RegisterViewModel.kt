@@ -13,18 +13,12 @@ class RegisterViewModel(private val repository: AuthRepository = AuthRepository(
         userData = repository.getUser()
     }
 
-
     fun getUser(): MutableLiveData<FirebaseUser> {
         return userData
     }
 
-    fun login(email: String?, password: String?) {
-     //   repository.login(email, password)
-    }
-
-    fun register(email: String?, password: String?) {
+    fun register(email: String, password: String) {
         repository.register(email, password)
     }
-
 
 }

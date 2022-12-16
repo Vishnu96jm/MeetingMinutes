@@ -9,10 +9,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.xome.meetingminutes.R
 import com.xome.meetingminutes.databinding.ActivityMainBinding
 import com.xome.meetingminutes.viewmodel.LogInViewModel
+import com.xome.meetingminutes.viewmodel.NotesViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
-  //  private lateinit var viewModel: MainViewModel
     private lateinit var logInViewModel: LogInViewModel
 
     private lateinit var binding: ActivityMainBinding
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         logInViewModel = ViewModelProvider(this).get(LogInViewModel::class.java)
+
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

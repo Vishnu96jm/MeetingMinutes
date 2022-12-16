@@ -32,6 +32,8 @@
         android:minHeight="48dp"
         android:textColor="@color/black"
         android:textSize="@dimen/title_text_size"
+        android:clickable="true"
+        android:focusable="false"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notesTitle"
         tools:text="Dec 15,2022" />
