@@ -3,6 +3,8 @@ package com.xome.meetingminutes.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.xome.meetingminutes.data.AuthRepository
 
 class LogInViewModel(private val repository: AuthRepository = AuthRepository()) : ViewModel() {
@@ -29,5 +31,17 @@ class LogInViewModel(private val repository: AuthRepository = AuthRepository()) 
 
     fun getLoggedOutData(): MutableLiveData<Boolean> {
         return logOutData
+    }
+
+    fun getfirebaseUser() : FirebaseUser?{
+        return repository.getfirebaseUser()
+    }
+
+    fun getFirebaseFirestore() : FirebaseFirestore {
+        return repository.getFirebaseFirestore()
+    }
+
+    fun fetchNotesQuery() : Query{
+        return repository.fetchNotesQuery()
     }
 }

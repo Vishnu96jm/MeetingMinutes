@@ -88,7 +88,7 @@ class AddNoteActivity : AppCompatActivity() {
                 if (title.isNotBlank() && date.isNotBlank() && desc.isNotBlank()) {
                     notesViewModel.saveNote(title, date, desc)
                 } else {
-                    toast("Fields cannot be empty")
+                    toast("Field(s) cannot be empty")
                 }
             }
             android.R.id.home -> {
