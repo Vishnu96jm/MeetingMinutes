@@ -8,32 +8,41 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.xome.meetingminutes.R
 import com.xome.meetingminutes.databinding.ActivityMainBinding
-import com.xome.meetingminutes.view.adapters.NotesListAdapter
 import com.xome.meetingminutes.viewmodel.LogInViewModel
 import NotesModel
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.GridLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.xome.meetingminutes.databinding.ItemNotesBinding
+import com.xome.meetingminutes.utils.createAndShowDialog
+import com.xome.meetingminutes.viewmodel.NotesViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var logInViewModel: LogInViewModel
-    private lateinit var firebaseUser: FirebaseUser
-    private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var notesViewModel: NotesViewModel
     private lateinit var notesQuery: Query
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var options : FirestoreRecyclerOptions<NotesModel>
     private lateinit var adapter : FirestoreRecyclerAdapter<NotesModel, MainActivity.NotesViewHolder>
+
+    companion object {
+        const val NOTE_TITLE = "NOTE TITLE"
+        const val NOTE_DATE = "NOTE DATE"
+        const val NOTE_CONTENT = "NOTE CONTENT"
+        const val NOTE_ID = "NOTE ID"
+        const val flag = "FLAG"
+    }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +55,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         logInViewModel = ViewModelProvider(this).get(LogInViewModel::class.java)
+        notesViewModel = ViewModelProvider(this).get(NotesViewModel::class.java)
 
-        firebaseUser = logInViewModel.getfirebaseUser()!!
-        firebaseFirestore = logInViewModel.getFirebaseFirestore()
         notesQuery = logInViewModel.fetchNotesQuery()
 
 
-   //     binding.notesItems.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
+        binding.notesItems.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
+
+//        binding.notesItems.layoutManager = GridLayoutManager(this,  2)
+
 
         options = FirestoreRecyclerOptions.Builder<NotesModel>()
             .setQuery(notesQuery, NotesModel::class.java)
@@ -71,7 +82,8 @@ class MainActivity : AppCompatActivity() {
                 position: Int,
                 model: NotesModel
             ) {
-                holder.bindData(model)
+                val noteId: String = adapter.snapshots.getSnapshot(position).id
+                holder.bindData(model, noteId)
             }
         }
 
@@ -90,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         val id : Int = item.itemId
         when(id){
             R.id.action_sort -> {
-              //  showFilterAndSortingDialog()
+             //   showFilterAndSortingDialog()
             }
             R.id.action_logout -> {
                 logInViewModel.logOut()
@@ -118,10 +130,41 @@ class MainActivity : AppCompatActivity() {
         private val title: TextView = binding.notesTitle
         private val date : TextView = binding.notesDate
         private val desc : TextView = binding.notesDescription
-        fun bindData(model: NotesModel){
-            title.text = model.title
-            date.text = model.date
-            desc.text = model.content
+        private val view = binding.root
+
+        fun bindData(note: NotesModel, id: String){
+            view.setOnClickListener { openNote(note, id) }
+            view.setOnLongClickListener {
+                onItemLongTap(note, id)
+                true
+            }
+            title.text = note.title
+            date.text = note.date
+            desc.text = note.content
         }
+    }
+
+    private fun onItemLongTap(note: NotesModel, id: String) {
+        createAndShowDialog(this,
+            getString(R.string.delete_title),
+            getString(R.string.delete_message, note.title),
+            onPositiveAction = {
+                notesViewModel.deleteNote(id)
+            }
+        )
+    }
+
+    private fun openNote(note: NotesModel, id: String) {
+        val title = note.title
+        val date = note.date
+        val content = note.content
+
+        val intent = Intent(this@MainActivity, AddNoteActivity::class.java)
+        intent.putExtra(NOTE_TITLE, title)
+        intent.putExtra(NOTE_DATE, date)
+        intent.putExtra(NOTE_CONTENT, content)
+        intent.putExtra(NOTE_ID, id)
+        intent.putExtra(flag, 1)
+        startActivity(intent)
     }
 }

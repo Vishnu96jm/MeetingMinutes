@@ -10,4 +10,8 @@
     <string name="to_add_notes">To add notes</string>
     <string name="sort_by">Sort By</string>
     <string name="log_out">Log Out</string>
+    <string name="delete_message">Are you sure you want to delete %s?</string>
+    <string name="delete_title">Delete Note</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>

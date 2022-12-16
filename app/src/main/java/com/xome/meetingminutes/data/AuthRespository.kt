@@ -23,9 +23,12 @@ class AuthRepository {
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     private val saveNoteLiveData = MutableLiveData<Boolean>()
+    private val editNoteLiveData = MutableLiveData<Boolean>()
 
 
     fun getSaveLiveData(): LiveData<Boolean> = saveNoteLiveData
+
+    fun getEditLiveData(): LiveData<Boolean> = editNoteLiveData
 
     init {
         if (firebaseAuth.currentUser != null) {
@@ -112,8 +115,47 @@ class AuthRepository {
     fun fetchNotesQuery(): Query {
 //        return firebaseFirestore.collection("notes").document(firebaseUser!!.uid)
 //            .collection("myNotes").orderBy("title", Query.Direction.ASCENDING)
-
         return db.collection("notes")
+    }
+
+    fun fetchDoc(id : String) : DocumentReference {
+        return db.collection("notes").document(id)
+    }
+
+    fun editNote(title: String, date: String, desc: String, noteId: String){
+        val documentReference = db.collection("notes").document(noteId)
+        val note = hashMapOf(
+            "title" to title,
+            "date" to date,
+            "content" to desc
+        )
+        documentReference.set(note).addOnSuccessListener {
+            Toast.makeText(
+                App.instance, "Note edited", Toast.LENGTH_SHORT
+            ).show()
+            editNoteLiveData.postValue(true)
+
+        }.addOnFailureListener {
+            Toast.makeText(
+                App.instance, "Edit failed", Toast.LENGTH_SHORT
+            ).show()
+            editNoteLiveData.postValue(true)
+
+        }
+    }
+
+    fun deleteNote(noteId: String){
+        val documentReference = db.collection("notes").document(noteId)
+        documentReference.delete().addOnSuccessListener {
+            Toast.makeText(
+                App.instance, "Note deleted", Toast.LENGTH_SHORT
+            ).show()
+        }.addOnFailureListener {
+            Toast.makeText(
+                App.instance, "Delete failed", Toast.LENGTH_SHORT
+            ).show()
+        }
+
     }
 
 }
