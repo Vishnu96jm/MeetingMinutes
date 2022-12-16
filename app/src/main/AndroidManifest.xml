@@ -17,9 +17,6 @@
         android:theme="@style/Theme.MeetingMinutes"
         tools:targetApi="31">
         <activity
-            android:name=".view.activities.NoteActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.activities.AddNoteActivity"
             android:exported="false" />
         <activity

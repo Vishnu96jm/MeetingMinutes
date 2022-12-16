@@ -14,4 +14,9 @@
     <string name="delete_title">Delete Note</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="no_sort_order">No sort</string>
+    <string name="sort_by_list">List View</string>
+    <string name="sort_by_grid">Grid View</string>
+    <string name="apply_sort_order_text">Apply Sort Order</string>
+    <string name="sort_options_title">Sort Options</string>
 </resources>

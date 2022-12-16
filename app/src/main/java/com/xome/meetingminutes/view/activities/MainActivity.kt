@@ -13,16 +13,16 @@ import com.xome.meetingminutes.R
 import com.xome.meetingminutes.databinding.ActivityMainBinding
 import com.xome.meetingminutes.viewmodel.LogInViewModel
 import NotesModel
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.GridLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.xome.meetingminutes.databinding.ItemNotesBinding
-import com.xome.meetingminutes.utils.createAndShowDialog
+import com.xome.meetingminutes.utils.*
+import com.xome.meetingminutes.view.SortOptionDialog
 import com.xome.meetingminutes.viewmodel.NotesViewModel
 
 
@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
         const val NOTE_CONTENT = "NOTE CONTENT"
         const val NOTE_ID = "NOTE ID"
         const val flag = "FLAG"
+        const val KEY_SORT_OPTION = "sort_option"
     }
+
+    private val localPreferences by lazy { getPreferences(Context.MODE_PRIVATE) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,11 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         notesQuery = logInViewModel.fetchNotesQuery()
 
-
-        binding.notesItems.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
-
-//        binding.notesItems.layoutManager = GridLayoutManager(this,  2)
-
+        assignLayout()
 
         options = FirestoreRecyclerOptions.Builder<NotesModel>()
             .setQuery(notesQuery, NotesModel::class.java)
@@ -102,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         val id : Int = item.itemId
         when(id){
             R.id.action_sort -> {
-             //   showFilterAndSortingDialog()
+                showFilterAndSortingDialog()
             }
             R.id.action_logout -> {
                 logInViewModel.logOut()
@@ -166,5 +165,30 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(NOTE_ID, id)
         intent.putExtra(flag, 1)
         startActivity(intent)
+    }
+
+    private fun showFilterAndSortingDialog() {
+        val dialog = SortOptionDialog { sortOption ->
+            saveSortOption(sortOption)
+            assignLayout()
+        }
+        dialog.show(supportFragmentManager, null)
+    }
+
+    private fun assignLayout() {
+       when (getSortOption()) {
+           ByList -> binding.notesItems.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL ,false)
+           ByGrid -> binding.notesItems.layoutManager = GridLayoutManager(this,  2)
+        }
+    }
+
+    private fun getSortOption(): SortOption {
+        return getSortOptionFromName(localPreferences.getString(KEY_SORT_OPTION, "") ?: "")
+    }
+
+    private fun saveSortOption(sortOption: SortOption) {
+        localPreferences.edit()
+            .putString(KEY_SORT_OPTION, sortOption.name)
+            .apply()
     }
 }
