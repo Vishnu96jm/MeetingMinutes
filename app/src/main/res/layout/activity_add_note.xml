@@ -39,6 +39,20 @@
         tools:text="Dec 15,2022" />
 
     <EditText
+        android:id="@+id/notesAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/default_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:hint="Author"
+        android:minHeight="48dp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/title_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notesTitle"
+        tools:text="HR Dept" />
+
+    <EditText
         android:id="@+id/notesDescription"
         android:layout_width="0dp"
         android:layout_height="0dp"

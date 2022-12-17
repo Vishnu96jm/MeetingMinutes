@@ -38,6 +38,18 @@
             tools:text="Dec 15, 2022" />
 
         <TextView
+            android:id="@+id/notesAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginTop="@dimen/small_margin"
+            android:textSize="@dimen/subtitle_text_size"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notesTitle"
+            tools:text="HR Dept" />
+
+        <TextView
             android:id="@+id/notesDescription"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -47,7 +59,7 @@
             android:layout_marginBottom="@dimen/half_margin"
             android:maxLength="240"
             android:textSize="14sp"
-            android:textStyle="italic"
+            android:fontFamily="@font/roboto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

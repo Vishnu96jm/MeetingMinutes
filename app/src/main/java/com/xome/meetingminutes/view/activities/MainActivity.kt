@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         const val NOTE_TITLE = "NOTE TITLE"
         const val NOTE_DATE = "NOTE DATE"
         const val NOTE_CONTENT = "NOTE CONTENT"
+        const val NOTE_AUTHOR = "NOTE AUTHOR"
         const val NOTE_ID = "NOTE ID"
         const val flag = "FLAG"
         const val KEY_SORT_OPTION = "sort_option"
@@ -129,6 +130,7 @@ class MainActivity : AppCompatActivity() {
         private val title: TextView = binding.notesTitle
         private val date : TextView = binding.notesDate
         private val desc : TextView = binding.notesDescription
+        private val author : TextView = binding.notesAuthor
         private val view = binding.root
 
         fun bindData(note: NotesModel, id: String){
@@ -140,6 +142,7 @@ class MainActivity : AppCompatActivity() {
             title.text = note.title
             date.text = note.date
             desc.text = note.content
+            author.text = note.author
         }
     }
 
@@ -157,11 +160,13 @@ class MainActivity : AppCompatActivity() {
         val title = note.title
         val date = note.date
         val content = note.content
+        val author = note.author
 
         val intent = Intent(this@MainActivity, AddNoteActivity::class.java)
         intent.putExtra(NOTE_TITLE, title)
         intent.putExtra(NOTE_DATE, date)
         intent.putExtra(NOTE_CONTENT, content)
+        intent.putExtra(NOTE_AUTHOR, author)
         intent.putExtra(NOTE_ID, id)
         intent.putExtra(flag, 1)
         startActivity(intent)

@@ -88,11 +88,12 @@ class AuthRepository {
         return db
     }
 
-    fun saveNote(title: String, date: String, desc: String){
+    fun saveNote(title: String, date: String, desc: String, author: String){
         val note = hashMapOf(
             "title" to title,
             "date" to date,
-            "content" to desc
+            "content" to desc,
+            "author" to author
             )
 
         db.collection("notes")
@@ -122,12 +123,13 @@ class AuthRepository {
         return db.collection("notes").document(id)
     }
 
-    fun editNote(title: String, date: String, desc: String, noteId: String){
+    fun editNote(title: String, date: String, desc: String, author: String, noteId: String){
         val documentReference = db.collection("notes").document(noteId)
         val note = hashMapOf(
             "title" to title,
             "date" to date,
-            "content" to desc
+            "content" to desc,
+            "author" to author
         )
         documentReference.set(note).addOnSuccessListener {
             Toast.makeText(

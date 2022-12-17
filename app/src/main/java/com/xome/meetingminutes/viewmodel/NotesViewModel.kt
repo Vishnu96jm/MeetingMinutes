@@ -19,12 +19,12 @@ class NotesViewModel(private val repository: AuthRepository = AuthRepository()) 
         return editNoteLiveData
     }
 
-    fun saveNote(title: String, date: String, desc: String) {
-        repository.saveNote(title, date, desc)
+    fun saveNote(title: String, date: String, desc: String, author: String) {
+        repository.saveNote(title, date, desc, author)
     }
 
-    fun editNote(title: String, date: String, desc: String, noteId: String){
-        repository.editNote(title, date, desc, noteId)
+    fun editNote(title: String, date: String, desc: String,author: String, noteId: String){
+        repository.editNote(title, date, desc, author, noteId)
     }
 
     fun deleteNote(noteId: String) {

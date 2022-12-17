@@ -6,26 +6,23 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ContentInfoCompat
-import androidx.lifecycle.ViewModelProvider
-import com.xome.meetingminutes.databinding.ActivityAddNoteBinding
-import com.xome.meetingminutes.R
-import com.xome.meetingminutes.utils.toast
-import com.xome.meetingminutes.viewmodel.NotesViewModel
 import androidx.lifecycle.Observer
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
+import androidx.lifecycle.ViewModelProvider
 import com.xome.meetingminutes.App
 import com.xome.meetingminutes.App.Companion.day
 import com.xome.meetingminutes.App.Companion.month
 import com.xome.meetingminutes.App.Companion.year
+import com.xome.meetingminutes.R
+import com.xome.meetingminutes.databinding.ActivityAddNoteBinding
+import com.xome.meetingminutes.utils.toast
+import com.xome.meetingminutes.view.activities.MainActivity.Companion.NOTE_AUTHOR
 import com.xome.meetingminutes.view.activities.MainActivity.Companion.NOTE_CONTENT
 import com.xome.meetingminutes.view.activities.MainActivity.Companion.NOTE_DATE
 import com.xome.meetingminutes.view.activities.MainActivity.Companion.NOTE_ID
 import com.xome.meetingminutes.view.activities.MainActivity.Companion.NOTE_TITLE
-import java.text.SimpleDateFormat
-import com.google.firebase.firestore.Query
 import com.xome.meetingminutes.view.activities.MainActivity.Companion.flag
+import com.xome.meetingminutes.viewmodel.NotesViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -48,12 +45,14 @@ class AddNoteActivity : AppCompatActivity() {
             val title = intent.getStringExtra(NOTE_TITLE)
             val date = intent.getStringExtra(NOTE_DATE)
             val content = intent.getStringExtra(NOTE_CONTENT)
+            val author = intent.getStringExtra(NOTE_AUTHOR)
             noteId = intent.getStringExtra(NOTE_ID).toString()
             isFromTouchFlag = intent.getIntExtra(flag, 0)
 
             binding.notesTitle.setText(title)
             binding.notesDate.setText(date)
             binding.notesDescription.setText(content)
+            binding.notesAuthor.setText(author)
 
             supportActionBar?.title = "Edit Note"
 
@@ -89,8 +88,14 @@ class AddNoteActivity : AppCompatActivity() {
                     val d1 = sdf.parse("$year-$month-$day")
                     val d2 = App.getDate()
 
+                    val calendar = Calendar.getInstance()
+                    calendar.set(year, month+1, day)
+
+                    val format = SimpleDateFormat("dd MMM yyy")
+                    val strDate = format.format(calendar.time)
+
                     if (d1!!.before(d2) || d1.equals(d2)){
-                        binding.notesDate.setText("$day/${month+1}/$year")
+                        binding.notesDate.setText(strDate)
                     }else{
                         toast("Future dates cannot be selected")
                     }
@@ -119,9 +124,11 @@ class AddNoteActivity : AppCompatActivity() {
                     val title = binding.notesTitle.text.toString()
                     val date = binding.notesDate.text.toString()
                     val desc = binding.notesDescription.text.toString()
+                    val author = binding.notesAuthor.text.toString()
 
-                    if (title.isNotBlank() && date.isNotBlank() && desc.isNotBlank()) {
-                        notesViewModel.saveNote(title, date, desc)
+                    if (title.isNotBlank() && date.isNotBlank() && desc.isNotBlank()
+                        && author.isNotBlank()) {
+                        notesViewModel.saveNote(title, date, desc, author)
                     } else {
                         toast("Field(s) cannot be empty")
                     }
@@ -129,9 +136,11 @@ class AddNoteActivity : AppCompatActivity() {
                     val title = binding.notesTitle.text.toString()
                     val date = binding.notesDate.text.toString()
                     val desc = binding.notesDescription.text.toString()
+                    val author = binding.notesAuthor.text.toString()
 
-                    if (title.isNotBlank() && date.isNotBlank() && desc.isNotBlank()) {
-                        notesViewModel.editNote(title, date, desc, noteId)
+                    if (title.isNotBlank() && date.isNotBlank() && desc.isNotBlank()
+                        && author.isNotBlank()) {
+                        notesViewModel.editNote(title, date, desc, author, noteId)
                     } else {
                         toast("Field(s) cannot be empty")
                     }
