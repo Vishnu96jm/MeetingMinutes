@@ -89,7 +89,7 @@ class AddNoteActivity : AppCompatActivity() {
                     val d2 = App.getDate()
 
                     val calendar = Calendar.getInstance()
-                    calendar.set(year, month+1, day)
+                    calendar.set(year, month, day)
 
                     val format = SimpleDateFormat("dd MMM yyy")
                     val strDate = format.format(calendar.time)

@@ -29,18 +29,6 @@ class LogInViewModel(private val repository: AuthRepository = AuthRepository()) 
         return userData
     }
 
-    fun getLoggedOutData(): MutableLiveData<Boolean> {
-        return logOutData
-    }
-
-    fun getfirebaseUser() : FirebaseUser?{
-        return repository.getfirebaseUser()
-    }
-
-    fun getFirebaseFirestore() : FirebaseFirestore {
-        return repository.getFirebaseFirestore()
-    }
-
     fun fetchNotesQuery() : Query{
         return repository.fetchNotesQuery()
     }

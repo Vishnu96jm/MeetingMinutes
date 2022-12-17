@@ -114,13 +114,7 @@ class AuthRepository {
     }
 
     fun fetchNotesQuery(): Query {
-//        return firebaseFirestore.collection("notes").document(firebaseUser!!.uid)
-//            .collection("myNotes").orderBy("title", Query.Direction.ASCENDING)
         return db.collection("notes")
-    }
-
-    fun fetchDoc(id : String) : DocumentReference {
-        return db.collection("notes").document(id)
     }
 
     fun editNote(title: String, date: String, desc: String, author: String, noteId: String){
