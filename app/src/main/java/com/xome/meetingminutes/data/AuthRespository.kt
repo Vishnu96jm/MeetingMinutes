@@ -80,14 +80,6 @@ class AuthRepository {
         logOutStatus.postValue(true)
     }
 
-    fun getfirebaseUser() : FirebaseUser?{
-        return firebaseUser
-    }
-
-    fun getFirebaseFirestore() : FirebaseFirestore{
-        return db
-    }
-
     fun saveNote(title: String, date: String, desc: String, author: String){
         val note = hashMapOf(
             "title" to title,
