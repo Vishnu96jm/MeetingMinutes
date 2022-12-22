@@ -135,7 +135,7 @@ class AuthRepository {
             Toast.makeText(
                 App.instance, "Edit failed", Toast.LENGTH_SHORT
             ).show()
-            editNoteLiveData.postValue(true)
+            editNoteLiveData.postValue(false)
 
         }
     }
